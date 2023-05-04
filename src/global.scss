@@ -24,3 +24,29 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+
+.text-center {
+    text-align: center;
+}
+
+.ion-card {
+    margin: 2px;
+    padding: 0px;
+    height: 65px;
+}
+.icone-menu { 
+    font-size: 35px;
+    padding: 0px;
+    color: #fff;
+}
+.texto-menu {
+    margin-top: -4px;
+    padding: 0px 2px 0px 2px;
+    white-space: nowrap;
+    color: #fff;
+}  
+
+.font12 {
+    font-size: 12px;
+}
