@@ -1,3 +1,25 @@
-<ion-app>
+<div *ngIf="!logado">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title>
+        Login
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Usuário</ion-label>
+      <ion-input [(ngModel)]="formLogin.usuario"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Senha</ion-label>
+      <ion-input type="password" [(ngModel)]="formLogin.senha"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" (click)="logar()">Entrar</ion-button>
+</div>
+
+<ion-app *ngIf="logado">
   <ion-router-outlet></ion-router-outlet>
 </ion-app>

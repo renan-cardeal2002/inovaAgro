@@ -27,6 +27,7 @@
     "@capacitor/status-bar": "5.0.0",
     "@ionic/angular": "^7.0.0",
     "@ionic/cordova-builders": "^9.0.0",
+    "@ionic/storage": "^2.2.0",
     "cordova-android": "10.1.2",
     "cordova-plugin-ionic": "^5.5.3",
     "ionicons": "^7.0.0",

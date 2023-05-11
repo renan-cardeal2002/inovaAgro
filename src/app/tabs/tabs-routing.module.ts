@@ -9,28 +9,45 @@ const routes: Routes = [
     children: [
       {
         path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () =>
+          import('../tab1/tab1.module').then((m) => m.Tab1PageModule),
       },
       {
         path: 'tab2',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        loadChildren: () =>
+          import('../tab2/tab2.module').then((m) => m.Tab2PageModule),
       },
       {
         path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        loadChildren: () =>
+          import('../tab3/tab3.module').then((m) => m.Tab3PageModule),
+      },
+      {
+        path: 'gastos',
+        loadChildren: () =>
+          import('./../financeiro/gastos/gastos.module').then(
+            (m) => m.GastosPageModule
+          ),
+      },
+      {
+        path: 'recebimentos',
+        loadChildren: () =>
+          import('./../financeiro/recebimentos/recebimentos.module').then(
+            (m) => m.RecebimentosPageModule
+          ),
       },
       {
         path: '',
         redirectTo: '/tabs/tab1',
-        pathMatch: 'full'
-      }
-    ]
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: '',
     redirectTo: '/tabs/tab1',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

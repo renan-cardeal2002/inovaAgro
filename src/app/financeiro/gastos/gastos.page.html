@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Gastos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Gastos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Valor</ion-label>
+      <ion-input type="number" [(ngModel)]="valorGasto"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Descrição</ion-label>
+      <ion-input [(ngModel)]="descricao"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" (click)="confirmar()">Confirmar</ion-button>
+</ion-content>

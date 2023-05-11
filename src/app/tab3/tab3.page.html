@@ -20,22 +20,19 @@
   <ion-list>
     <ion-item>
       <ion-label>Nome</ion-label>
-      <ion-input value="Renan"></ion-input>
+      <ion-input [(ngModel)]="perfil.nome" disabled></ion-input>
     </ion-item>
-
     <ion-item>
       <ion-label>Cargo</ion-label>
-      <ion-input value="Produtor"></ion-input>
+      <ion-input [(ngModel)]="perfil.cargo" disabled></ion-input>
     </ion-item>
-
     <ion-item>
       <ion-label>Email</ion-label>
-      <ion-input type="email" value="renan01022002@hotmail.com" placeholder="email@domain.com"></ion-input>
+      <ion-input type="email" [(ngModel)]="perfil.email" placeholder="email@domain.com" disabled></ion-input>
     </ion-item>
-
     <ion-item>
       <ion-label>Telefone</ion-label>
-      <ion-input type="tel" placeholder="888-888-8888"></ion-input>
+      <ion-input type="tel" [(ngModel)]="perfil.telefone" placeholder="888-888-8888" disabled></ion-input>
     </ion-item>
   </ion-list>
 </ion-content>
