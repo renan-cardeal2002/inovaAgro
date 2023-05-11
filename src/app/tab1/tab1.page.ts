@@ -13,6 +13,7 @@ export class Tab1Page implements OnInit {
   public saldo: number = 0;
   public ocorrencias: any = [];
   public cor: string = 'warning';
+  public grafico: any;
 
   constructor(
     private navCtrl: NavController,
@@ -20,9 +21,7 @@ export class Tab1Page implements OnInit {
     private storage: Storage
   ) {}
 
-  ngOnInit(): void {
-    this.atualizaGrafico();
-  }
+  ngOnInit(): void {}
 
   async ionViewWillEnter() {
     await this.storage.get('saldo').then((data) => {
@@ -31,10 +30,14 @@ export class Tab1Page implements OnInit {
       if (this.saldo < 0) this.cor = 'danger';
     });
     await this.storage.get('ocorrencias').then((data) => {
-      if (data) this.ocorrencias = data;
+      if (data) {
+        this.ocorrencias = data;
+        this.atualizaGrafico();
+        this.grafico.destroy();
+      }
     });
 
-    await this.atualizaGrafico();
+    //await this.atualizaGrafico();
   }
 
   async atualizaGrafico() {
@@ -55,7 +58,7 @@ export class Tab1Page implements OnInit {
     );
 
     const item: any = document.getElementById('saldo');
-    new Chart(item, {
+    this.grafico = new Chart(item, {
       type: 'doughnut',
       data: {
         labels: ['RECEB.', 'GASTO'],
