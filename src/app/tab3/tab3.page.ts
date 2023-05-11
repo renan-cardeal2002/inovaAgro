@@ -6,7 +6,12 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['tab3.page.scss'],
 })
 export class Tab3Page {
-  public perfil: any = this.storage.get('perfil');
+  public perfil: any = {
+    nome: 'Renan',
+    cargo: 'Desenvolvedor',
+    email: 'renan01022002@hotmail.com',
+    telefone: '(43) 99867-2746',
+  }; //this.storage.get('perfil');
 
   constructor(private storage: Storage) {}
 }
