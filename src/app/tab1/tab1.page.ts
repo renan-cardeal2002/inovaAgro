@@ -15,6 +15,7 @@ export class Tab1Page implements OnInit {
   public ocorrencias: any = [];
   public cor: string = 'warning';
   public grafico: any;
+  public visualizaSaldo: boolean = false;
 
   constructor(
     private navCtrl: NavController,
@@ -71,6 +72,10 @@ export class Tab1Page implements OnInit {
         ],
       },
     });
+  }
+
+  async verSaldo() {
+    this.visualizaSaldo = !this.visualizaSaldo;
   }
 
   async irParaGastos() {

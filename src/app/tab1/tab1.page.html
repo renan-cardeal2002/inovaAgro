@@ -30,9 +30,22 @@
   <ion-card [color]="cor" class="text-center">
     <ion-card-header>
       <ion-card-title>
-        <strong>
-          Saldo R${{funcoes.formataValores(saldo)}}
-        </strong>
+        <ion-row>
+          <ion-col style="text-align: center;" size="10">
+            <strong>
+              Saldo <span *ngIf="!visualizaSaldo">********</span>
+              <span *ngIf="visualizaSaldo">R${{funcoes.formataValores(saldo)}}</span>
+            </strong>
+          </ion-col>
+          <ion-col style="text-align: right;" size="2">
+            <ion-buttons>
+              <ion-button (click)="verSaldo()">
+                <ion-icon *ngIf="!visualizaSaldo" class="icone-menu" name="eye"></ion-icon>
+                <ion-icon *ngIf="visualizaSaldo" class="icone-menu" name="eye-off"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+        </ion-row>
       </ion-card-title>
     </ion-card-header>
   </ion-card>
