@@ -20,7 +20,9 @@ export class Tab1Page implements OnInit {
     private storage: Storage
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.atualizaGrafico();
+  }
 
   async ionViewWillEnter() {
     await this.storage.get('saldo').then((data) => {
@@ -36,22 +38,18 @@ export class Tab1Page implements OnInit {
   }
 
   async atualizaGrafico() {
-    await this.storage.get('ocorrencias').then((data) => {
-      if (data) this.ocorrencias = data;
-    });
-
-    const registrosRecebidos: any = this.ocorrencias.filter(
+    const registrosRecebidos: any = await this.ocorrencias.filter(
       (item: any) => item.tipo === 'RECEB.'
     );
-    const registrosGastos: any = this.ocorrencias.filter(
+    const registrosGastos: any = await this.ocorrencias.filter(
       (item: any) => item.tipo === 'GASTO'
     );
 
-    const somaRecebidos = registrosRecebidos.reduce(
+    const somaRecebidos = await registrosRecebidos.reduce(
       (total: number, item: any) => total + item['valor'],
       0
     );
-    const somaGastos = registrosGastos.reduce(
+    const somaGastos = await registrosGastos.reduce(
       (total: number, item: any) => total + item['valor'],
       0
     );
