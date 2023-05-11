@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AppComponent } from '../app.component';
 import { Storage } from '@ionic/storage';
+import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-tab1',
@@ -29,6 +30,46 @@ export class Tab1Page implements OnInit {
     });
     await this.storage.get('ocorrencias').then((data) => {
       if (data) this.ocorrencias = data;
+    });
+
+    await this.atualizaGrafico();
+  }
+
+  async atualizaGrafico() {
+    let registrosRecebidos: any = [];
+    let registrosGastos: any = [];
+
+    this.ocorrencias.forEach((item: any) => {
+      if (item.tipo === 'RECEB.') {
+        registrosRecebidos.push(item);
+      } else if (item.tipo === 'GASTO') {
+        registrosGastos.push(item);
+      }
+    });
+
+    const somaRecebidos = registrosRecebidos.reduce(
+      (total: number, item: any) => total + item['valor'],
+      0
+    );
+    const somaGastos = registrosGastos.reduce(
+      (total: number, item: any) => total + item['valor'],
+      0
+    );
+
+    console.log(somaRecebidos, somaGastos);
+
+    let item: any = document.getElementById('saldo');
+    new Chart(item, {
+      type: 'doughnut',
+      data: {
+        labels: ['RECEB.', 'GASTO'],
+        datasets: [
+          {
+            label: 'Saldo',
+            data: [somaRecebidos, somaGastos],
+          },
+        ],
+      },
     });
   }
 
