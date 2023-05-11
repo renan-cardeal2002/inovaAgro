@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { AppComponent } from '../app.component';
 import { Storage } from '@ionic/storage';
 import Chart from 'chart.js/auto';
+import { FuncoesGeraisService } from '../services/funcoes-gerais.service';
 
 @Component({
   selector: 'app-tab1',
@@ -18,7 +19,8 @@ export class Tab1Page implements OnInit {
   constructor(
     private navCtrl: NavController,
     private app: AppComponent,
-    private storage: Storage
+    private storage: Storage,
+    public funcoes: FuncoesGeraisService
   ) {}
 
   ngOnInit(): void {}
@@ -31,13 +33,11 @@ export class Tab1Page implements OnInit {
     });
     await this.storage.get('ocorrencias').then((data) => {
       if (data) {
-        this.ocorrencias = data;
+        this.ocorrencias = data.toReversed();
         this.atualizaGrafico();
         this.grafico.destroy();
       }
     });
-
-    //await this.atualizaGrafico();
   }
 
   async atualizaGrafico() {
@@ -83,5 +83,14 @@ export class Tab1Page implements OnInit {
 
   async deslogar() {
     this.app.deslogar();
+  }
+
+  getCorCard(item: any) {
+    let cor: string = 'warning';
+
+    if (item.tipo === 'GASTO') cor = 'danger';
+    if (item.tipo === 'RECEB.') cor = 'success';
+
+    return cor;
   }
 }

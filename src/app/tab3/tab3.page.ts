@@ -11,6 +11,7 @@ export class Tab3Page {
     cargo: 'Desenvolvedor',
     email: 'renan01022002@hotmail.com',
     telefone: '(43) 99867-2746',
+    foto_perfil: './../../assets/foto_perfil.svg',
   }; //this.storage.get('perfil');
 
   constructor(private storage: Storage) {}

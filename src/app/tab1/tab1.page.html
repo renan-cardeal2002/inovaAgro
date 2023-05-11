@@ -27,9 +27,13 @@
     </ion-row>
   </ion-grid>-->
   <!--<ion-searchbar placeholder="Pesquisar Aplicativos"></ion-searchbar>-->
-  <ion-card color="{{cor}}" class="text-center">
+  <ion-card [color]="cor" class="text-center">
     <ion-card-header>
-      <ion-card-title>Saldo R${{saldo}}</ion-card-title>
+      <ion-card-title>
+        <strong>
+          Saldo R${{funcoes.formataValores(saldo)}}
+        </strong>
+      </ion-card-title>
     </ion-card-header>
   </ion-card>
 
@@ -74,18 +78,30 @@
 
   <div style="width: 100%;"><canvas id="saldo"></canvas></div>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col size="3">Tipo</ion-col>
-      <ion-col>Descrição</ion-col>
-      <ion-col size="2">Valor</ion-col>
-    </ion-row>
-    <ion-row *ngFor="let ocor of ocorrencias;">
-      <ion-col size="3">{{ocor.tipo}}</ion-col>
-      <ion-col>{{ocor.descricao}}</ion-col>
-      <ion-col size="2">{{ocor.valor}}</ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-card *ngFor="let ocor of ocorrencias;" [color]="getCorCard(ocor)">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-row>
+          <ion-col>
+            <strong>{{ocor.descricao}}</strong>
+          </ion-col>
+          <ion-col style="text-align: right;">
+            <strong>R${{funcoes.formataValores(ocor.valor)}}</strong>
+          </ion-col>
+        </ion-row>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          {{ocor.tipo}}
+        </ion-col>
+        <ion-col style="text-align: right;">
+          {{funcoes.formataData(ocor.data, 5)}}
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button>

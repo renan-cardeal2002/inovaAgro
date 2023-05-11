@@ -34,6 +34,7 @@ export class RecebimentosPage implements OnInit {
       tipo: 'RECEB.',
       valor: this.valorRecebido,
       descricao: this.descricao,
+      data: new Date(),
     };
 
     this.ocorrencias.push(novaOcor);

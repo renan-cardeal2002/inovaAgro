@@ -34,6 +34,7 @@ export class GastosPage implements OnInit {
       tipo: 'GASTO',
       valor: this.valorGasto,
       descricao: this.descricao,
+      data: new Date(),
     };
 
     this.ocorrencias.push(novaOcor);
