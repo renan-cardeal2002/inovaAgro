@@ -36,16 +36,16 @@ export class Tab1Page implements OnInit {
   }
 
   async atualizaGrafico() {
-    let registrosRecebidos: any = [];
-    let registrosGastos: any = [];
-
-    this.ocorrencias.forEach((item: any) => {
-      if (item.tipo === 'RECEB.') {
-        registrosRecebidos.push(item);
-      } else if (item.tipo === 'GASTO') {
-        registrosGastos.push(item);
-      }
+    await this.storage.get('ocorrencias').then((data) => {
+      if (data) this.ocorrencias = data;
     });
+
+    const registrosRecebidos: any = this.ocorrencias.filter(
+      (item: any) => item.tipo === 'RECEB.'
+    );
+    const registrosGastos: any = this.ocorrencias.filter(
+      (item: any) => item.tipo === 'GASTO'
+    );
 
     const somaRecebidos = registrosRecebidos.reduce(
       (total: number, item: any) => total + item['valor'],
@@ -56,9 +56,7 @@ export class Tab1Page implements OnInit {
       0
     );
 
-    console.log(somaRecebidos, somaGastos);
-
-    let item: any = document.getElementById('saldo');
+    const item: any = document.getElementById('saldo');
     new Chart(item, {
       type: 'doughnut',
       data: {
@@ -67,6 +65,7 @@ export class Tab1Page implements OnInit {
           {
             label: 'Saldo',
             data: [somaRecebidos, somaGastos],
+            backgroundColor: ['#2dd36f', '#eb445a'],
           },
         ],
       },
