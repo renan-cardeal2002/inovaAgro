@@ -8,6 +8,21 @@ import { Storage } from '@ionic/storage';
 })
 export class AppComponent implements OnInit {
   public logado: boolean = false;
+  public cadastrar: boolean = false;
+
+  public formCadastro: {
+    nome: string;
+    email: string;
+    telefone: string;
+    usuario: string;
+    senha: string;
+  } = {
+    nome: '',
+    email: '',
+    telefone: '',
+    usuario: '',
+    senha: '',
+  };
   public formLogin: { usuario: string; senha: string } = {
     usuario: '',
     senha: '',
@@ -39,9 +54,7 @@ export class AppComponent implements OnInit {
       this.usuariosCadastrados = data;
     });
 
-    if (!this.usuariosCadastrados.length) {
-      return;
-    }
+    if (!this.usuariosCadastrados.length) return;
 
     this.usuariosCadastrados.forEach((element: any) => {
       if (
@@ -53,6 +66,43 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
+  async irParaCadastro() {
+    this.cadastrar = true;
+  }
+
+  async salvarCadastro() {
+    if (
+      !this.formCadastro.nome ||
+      !this.formCadastro.email ||
+      !this.formCadastro.telefone ||
+      !this.formCadastro.usuario ||
+      !this.formCadastro.senha
+    ) {
+      return;
+    }
+
+    await this.storage.get('usuariosCadastrados').then((data) => {
+      this.usuariosCadastrados = data;
+    });
+
+    this.usuariosCadastrados.push(this.formCadastro);
+    this.storage.set('perfil', this.formCadastro);
+    this.storage.set('usuariosCadastrados', this.usuariosCadastrados);
+
+    this.formLogin.usuario = this.formCadastro.usuario;
+    this.formLogin.senha = this.formCadastro.senha;
+
+    this.cadastrar = false;
+
+    await this.logar();
+  }
+
+  async limparHistorico() {
+    this.storage.remove('saldo');
+    this.storage.remove('ocorrencias');
+  }
+
   async deslogar() {
     this.storage.remove('usarioLogado');
     this.logado = false;

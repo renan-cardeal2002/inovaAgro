@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AppComponent } from '../app.component';
 import { Storage } from '@ionic/storage';
 import Chart from 'chart.js/auto';
 import { FuncoesGeraisService } from '../services/funcoes-gerais.service';
@@ -19,7 +18,6 @@ export class Tab1Page implements OnInit {
 
   constructor(
     private navCtrl: NavController,
-    private app: AppComponent,
     private storage: Storage,
     public funcoes: FuncoesGeraisService
   ) {}
@@ -84,10 +82,6 @@ export class Tab1Page implements OnInit {
 
   async irParaRecebimentos() {
     this.navCtrl.navigateRoot('/tabs/recebimentos');
-  }
-
-  async deslogar() {
-    this.app.deslogar();
   }
 
   getCorCard(item: any) {

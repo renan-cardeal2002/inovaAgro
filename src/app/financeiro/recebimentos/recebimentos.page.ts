@@ -8,8 +8,8 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['./recebimentos.page.scss'],
 })
 export class RecebimentosPage implements OnInit {
-  public saldoTotal: number = 0;
-  public valorRecebido: number = 0;
+  public saldoTotal: number;
+  public valorRecebido: number;
   public descricao: string = '';
   public ocorrencias: any[] = [];
 
@@ -32,7 +32,7 @@ export class RecebimentosPage implements OnInit {
 
     const novaOcor = {
       tipo: 'RECEB.',
-      valor: this.valorRecebido,
+      valor: Math.abs(this.valorRecebido),
       descricao: this.descricao,
       data: new Date(),
     };

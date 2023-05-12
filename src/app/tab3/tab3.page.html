@@ -3,6 +3,11 @@
     <ion-title>
       Perfil
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="deslogar()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -12,8 +17,8 @@
       <ion-title size="large">Perfil</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-item style="align-items: center; font-size: 50px;">
-    <ion-avatar style="width: 50%; height: 140px;">
+  <ion-item>
+    <ion-avatar style="width: 65%; height: 200px;">
       <img [src]="perfil.foto_perfil" />
     </ion-avatar>
   </ion-item>
@@ -35,4 +40,5 @@
       <ion-input type="tel" [(ngModel)]="perfil.telefone" placeholder="888-888-8888" disabled></ion-input>
     </ion-item>
   </ion-list>
+  <ion-chip (click)="limparHistorico()">Limpar Histórico</ion-chip>
 </ion-content>

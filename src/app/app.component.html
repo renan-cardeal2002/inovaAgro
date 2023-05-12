@@ -1,4 +1,4 @@
-<div *ngIf="!logado">
+<div *ngIf="!logado && !cadastrar">
   <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-title>
@@ -18,6 +18,42 @@
     </ion-item>
   </ion-list>
   <ion-button expand="block" (click)="logar()">Entrar</ion-button>
+  <ion-button expand="block" (click)="irParaCadastro()">Cadastre-se</ion-button>
+</div>
+
+<div *ngIf="cadastrar">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title>
+        Cadastro
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Nome</ion-label>
+      <ion-input [(ngModel)]="formCadastro.nome"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Email</ion-label>
+      <ion-input type="email" [(ngModel)]="formCadastro.email" placeholder="email@domain.com"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Telefone</ion-label>
+      <ion-input type="tel" [(ngModel)]="formCadastro.telefone" placeholder="888-888-8888"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Usuário</ion-label>
+      <ion-input [(ngModel)]="formCadastro.usuario"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Senha</ion-label>
+      <ion-input type="password" [(ngModel)]="formCadastro.senha"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" (click)="salvarCadastro()">Salvar e logar</ion-button>
+  </ion-list>
 </div>
 
 <ion-app *ngIf="logado">
