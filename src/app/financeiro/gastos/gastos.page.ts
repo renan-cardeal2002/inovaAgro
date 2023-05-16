@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['./gastos.page.scss'],
 })
 export class GastosPage implements OnInit {
+  public usuarioLogado: any;
   public saldoTotal: number;
   public valorGasto: number;
   public descricao: string = '';
@@ -16,6 +17,9 @@ export class GastosPage implements OnInit {
   constructor(private navCtrl: NavController, private storage: Storage) {}
 
   async ngOnInit() {
+    await this.storage.get('usarioLogado').then((data) => {
+      if (data) this.usuarioLogado = data;
+    });
     await this.storage.get('saldo').then((data) => {
       this.saldoTotal = data;
     });
@@ -32,6 +36,7 @@ export class GastosPage implements OnInit {
 
     const novaOcor = {
       tipo: 'GASTO',
+      usuario: this.usuarioLogado.usuario,
       valor: Math.abs(this.valorGasto),
       descricao: this.descricao,
       data: new Date(),

@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
+interface Login {
+  usuario: string;
+  senha: string;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -23,12 +28,19 @@ export class AppComponent implements OnInit {
     usuario: '',
     senha: '',
   };
-  public formLogin: { usuario: string; senha: string } = {
+  public formLogin: Login = {
     usuario: '',
     senha: '',
   };
   public usuariosCadastrados: any;
-  public cadUsuarios = [{ usuario: 'renan', senha: '123' }];
+  public cadUsuarios: Login[] = [
+    { usuario: 'renan', senha: '123' },
+    { usuario: 'lucas_hirose', senha: '123' },
+    { usuario: 'paula', senha: '123' },
+    { usuario: 'isadora', senha: '123' },
+    { usuario: 'lucas', senha: '123' },
+    { usuario: 'joaquim', senha: '123' },
+  ];
 
   constructor(private storage: Storage) {}
 
@@ -39,9 +51,7 @@ export class AppComponent implements OnInit {
   async verificarLogin() {
     await this.storage.set('usuariosCadastrados', this.cadUsuarios);
     await this.storage.get('usarioLogado').then((data) => {
-      if (data) {
-        this.logado = true;
-      }
+      if (data) this.logado = true;
     });
   }
 
