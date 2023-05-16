@@ -8,6 +8,9 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['tab3.page.scss'],
 })
 export class Tab3Page implements OnInit {
+  public validaFotoPerfil = (foto_perfil: any) => {
+    return foto_perfil === '' || !foto_perfil;
+  };
   public usuariosCadastrados: any = [
     {
       nome: 'Renan Cardeal',
@@ -58,8 +61,14 @@ export class Tab3Page implements OnInit {
       foto_perfil: '',
     },
   ];
-
-  public perfilSelecionado: any;
+  public perfilSelecionado: any = {
+    nome: 'Renan Cardeal',
+    usuario: 'renan',
+    cargo: 'Desenvolvedor',
+    email: 'renan01022002@hotmail.com',
+    telefone: '(43) 99867-2746',
+    foto_perfil: './../../assets/foto_perfil.svg',
+  };
   public usuarioLogado: any;
 
   constructor(
@@ -75,24 +84,22 @@ export class Tab3Page implements OnInit {
       this.usuarioLogado = data;
     });
 
-    // await this.storage.get('perfil').then((data) => {
-    //   if (data) this.perfil = data;
-    //   // if (data.usuario === this.usuarioLogado.usuario) this.perfil = data;
-    // });
-
-    this.perfilSelecionado = this.usuarioLogado.filter({
-      usuario: this.usuarioLogado.usuario,
-    })[0];
-
-    console.log(this.perfilSelecionado);
+    this.perfilSelecionado = this.usuariosCadastrados.filter(
+      (item: any) => item.usuario === this.usuarioLogado.usuario
+    )[0];
   }
 
   async limparHistorico() {
     this.app.limparHistorico();
-    this.navCtlr.pop();
+    this.navCtlr.back();
   }
 
   async deslogar() {
     this.app.deslogar();
+  }
+
+  bucarFotoPerfil(foto_perfil: any) {
+    if (this.validaFotoPerfil(foto_perfil)) return;
+    return foto_perfil;
   }
 }

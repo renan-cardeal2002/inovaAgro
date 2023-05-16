@@ -48,4 +48,8 @@ export class RecebimentosPage implements OnInit {
 
     this.navCtrl.back();
   }
+
+  voltar() {
+    this.navCtrl.back();
+  }
 }

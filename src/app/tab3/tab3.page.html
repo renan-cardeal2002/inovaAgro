@@ -17,27 +17,27 @@
       <ion-title size="large">Perfil</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-item>
+  <ion-item *ngIf="!validaFotoPerfil(perfilSelecionado.foto_perfil)">
     <ion-avatar style="width: 65%; height: 200px;">
-      <img [src]="perfil.foto_perfil" />
+      <img [src]="bucarFotoPerfil(perfilSelecionado.foto_perfil)" />
     </ion-avatar>
   </ion-item>
   <ion-list>
     <ion-item>
       <ion-label>Nome</ion-label>
-      <ion-input [(ngModel)]="perfil.nome" disabled></ion-input>
+      <ion-input [(ngModel)]="perfilSelecionado.nome" disabled></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Cargo</ion-label>
-      <ion-input [(ngModel)]="perfil.cargo" disabled></ion-input>
+      <ion-input [(ngModel)]="perfilSelecionado.cargo" disabled></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Email</ion-label>
-      <ion-input type="email" [(ngModel)]="perfil.email" placeholder="email@domain.com" disabled></ion-input>
+      <ion-input type="email" [(ngModel)]="perfilSelecionado.email" placeholder="email@domain.com" disabled></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Telefone</ion-label>
-      <ion-input type="tel" [(ngModel)]="perfil.telefone" placeholder="888-888-8888" disabled></ion-input>
+      <ion-input type="tel" [(ngModel)]="perfilSelecionado.telefone" placeholder="888-888-8888" disabled></ion-input>
     </ion-item>
   </ion-list>
   <ion-chip (click)="limparHistorico()">Limpar Histórico</ion-chip>

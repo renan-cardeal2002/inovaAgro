@@ -12,6 +12,21 @@
       <ion-title size="large">Aplicativos</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-searchbar placeholder="Pesquisar Aplicativos"></ion-searchbar>
+  <ion-searchbar placeholder="Pesquisar Aplicativos">
+  </ion-searchbar>
 
+  <ion-card *ngFor="let app of aplicativos;" [color]="getCorCard(app)" (click)="selecionarApp(app)">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-row>
+          <ion-col>
+            <strong>{{app.nome}}</strong>
+          </ion-col>
+          <ion-col style="text-align: right;">
+            <strong></strong>
+          </ion-col>
+        </ion-row>
+      </ion-card-title>
+    </ion-card-header>
+  </ion-card>
 </ion-content>
