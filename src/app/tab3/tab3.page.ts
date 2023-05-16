@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 @Component({
   selector: 'app-tab3',
@@ -74,7 +74,8 @@ export class Tab3Page implements OnInit {
   constructor(
     private storage: Storage,
     private navCtlr: NavController,
-    private app: AppComponent
+    private app: AppComponent,
+    private alertController: AlertController
   ) {}
 
   ngOnInit(): void {}
@@ -95,7 +96,24 @@ export class Tab3Page implements OnInit {
   }
 
   async deslogar() {
-    this.app.deslogar();
+    const alert = await this.alertController.create({
+      subHeader: 'Deseja sair?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {},
+        },
+        {
+          text: 'Sair',
+          role: 'confirm',
+          handler: () => {
+            this.app.deslogar();
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 
   bucarFotoPerfil(foto_perfil: any) {

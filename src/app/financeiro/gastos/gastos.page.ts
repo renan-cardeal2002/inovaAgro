@@ -1,23 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { BasicModulos } from 'src/app/classes/basic-modulos';
 
 @Component({
   selector: 'app-gastos',
   templateUrl: './gastos.page.html',
   styleUrls: ['./gastos.page.scss'],
 })
-export class GastosPage extends BasicModulos implements OnInit {
+export class GastosPage implements OnInit {
   public usuarioLogado: any;
   public saldoTotal: number;
   public valorGasto: number;
   public descricao: string = '';
   public ocorrencias: any[] = [];
 
-  constructor(private navCtrle: NavController, private storage: Storage) {
-    super();
-  }
+  constructor(private navCtrl: NavController, private storage: Storage) {}
 
   async ngOnInit() {
     await this.storage.get('usarioLogado').then((data) => {
@@ -48,6 +45,10 @@ export class GastosPage extends BasicModulos implements OnInit {
     this.ocorrencias.push(novaOcor);
 
     this.storage.set('ocorrencias', this.ocorrencias);
-    this.navCtrle.back();
+    this.navCtrl.back();
+  }
+
+  voltar() {
+    this.navCtrl.back();
   }
 }
