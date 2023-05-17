@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { MensagemService } from './services/mensagem.service';
 
 interface Login {
   usuario: string;
@@ -42,7 +43,7 @@ export class AppComponent implements OnInit {
     { usuario: 'joaquim', senha: '123' },
   ];
 
-  constructor(private storage: Storage) {}
+  constructor(private storage: Storage, private mensagem: MensagemService) {}
 
   ngOnInit() {
     this.verificarLogin();
@@ -57,6 +58,11 @@ export class AppComponent implements OnInit {
 
   async logar() {
     if (!this.formLogin.usuario || !this.formLogin.senha) {
+      this.mensagem.mostrarMensagem(
+        'Atenção',
+        'Preencha todos os campos para continuar'
+      );
+
       return;
     }
 
@@ -73,7 +79,12 @@ export class AppComponent implements OnInit {
       ) {
         this.storage.set('usarioLogado', this.formLogin);
         this.logado = true;
-      }
+      } /* else {
+        this.mensagem.mostrarMensagem(
+          'Atenção',
+          'Usuário ou senha incorretos, revise e tente logar novamente'
+        );
+      }*/
     });
   }
 

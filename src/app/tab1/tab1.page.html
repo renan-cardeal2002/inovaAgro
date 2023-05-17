@@ -5,7 +5,6 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
@@ -86,7 +85,7 @@
 
   <div style="width: 100%;"><canvas id="saldo"></canvas></div>
 
-  <ion-card *ngFor="let ocor of ocorrencias;" [color]="getCorCard(ocor)">
+  <ion-card *ngFor="let ocor of cOcorrencia.ocorrencias;" [color]="getCorCard(ocor)">
     <ion-card-header>
       <ion-card-title>
         <ion-row>

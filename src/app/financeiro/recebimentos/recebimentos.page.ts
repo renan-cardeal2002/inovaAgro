@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { MensagemService } from 'src/app/services/mensagem.service';
 
 @Component({
   selector: 'app-recebimentos',
@@ -14,7 +15,11 @@ export class RecebimentosPage implements OnInit {
   public descricao: string = '';
   public ocorrencias: any[] = [];
 
-  constructor(private navCtrl: NavController, private storage: Storage) {}
+  constructor(
+    private navCtrl: NavController,
+    private storage: Storage,
+    private mensagem: MensagemService
+  ) {}
 
   async ngOnInit() {
     await this.storage.get('usarioLogado').then((data) => {
@@ -29,7 +34,13 @@ export class RecebimentosPage implements OnInit {
   }
 
   confirmar() {
-    if (!this.valorRecebido || !this.descricao) return;
+    if (!this.valorRecebido || !this.descricao) {
+      this.mensagem.mostrarMensagem(
+        'Atenção',
+        'Preencha todos os campos para continuar'
+      );
+      return;
+    }
 
     this.saldoTotal += this.valorRecebido;
     this.storage.set('saldo', this.saldoTotal);

@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import Chart from 'chart.js/auto';
 import { FuncoesGeraisService } from '../services/funcoes-gerais.service';
+import { Ocorrencias } from '../classes/ocorrencias';
 
 @Component({
   selector: 'app-tab1',
@@ -11,16 +12,19 @@ import { FuncoesGeraisService } from '../services/funcoes-gerais.service';
 })
 export class Tab1Page implements OnInit {
   public saldo: number = 0;
-  public ocorrencias: any = [];
   public cor: string = 'warning';
   public grafico: any;
   public visualizaSaldo: boolean = false;
+
+  public cOcorrencia: Ocorrencias;
 
   constructor(
     private navCtrl: NavController,
     private storage: Storage,
     public funcoes: FuncoesGeraisService
-  ) {}
+  ) {
+    this.cOcorrencia = new Ocorrencias(this.storage);
+  }
 
   ngOnInit(): void {}
 
@@ -30,20 +34,18 @@ export class Tab1Page implements OnInit {
       if (this.saldo > 0) this.cor = 'success';
       if (this.saldo < 0) this.cor = 'danger';
     });
-    await this.storage.get('ocorrencias').then((data) => {
-      if (data) {
-        this.ocorrencias = data.toReversed();
-        this.atualizaGrafico();
-        this.grafico.destroy();
-      }
+
+    await this.cOcorrencia.getOcorrencias().then(() => {
+      this.atualizaGrafico();
+      this.grafico.destroy();
     });
   }
 
   async atualizaGrafico() {
-    const registrosRecebidos: any = await this.ocorrencias.filter(
+    const registrosRecebidos: any = this.cOcorrencia.ocorrencias.filter(
       (item: any) => item.tipo === 'RECEB.'
     );
-    const registrosGastos: any = await this.ocorrencias.filter(
+    const registrosGastos: any = this.cOcorrencia.ocorrencias.filter(
       (item: any) => item.tipo === 'GASTO'
     );
 
