@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class RequisicaoService {
-  private url: string = '';
+  private url: string = 'http://localhost:3333';
   constructor(private http: HttpClient) {
     this.url = environment.urlApi;
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { MensagemService } from './services/mensagem.service';
+import { RequisicaoService } from './services/requisicao.service';
 
 interface Login {
   usuario: string;
@@ -43,7 +44,11 @@ export class AppComponent implements OnInit {
     { usuario: 'joaquim', senha: '123' },
   ];
 
-  constructor(private storage: Storage, private mensagem: MensagemService) {}
+  constructor(
+    private storage: Storage,
+    private mensagem: MensagemService,
+    private requisicao: RequisicaoService
+  ) {}
 
   ngOnInit() {
     this.verificarLogin();
@@ -57,7 +62,9 @@ export class AppComponent implements OnInit {
   }
 
   async logar() {
-    if (!this.formLogin.usuario || !this.formLogin.senha) {
+    const { usuario, senha } = this.formLogin;
+
+    if (!usuario || !senha) {
       this.mensagem.mostrarMensagem(
         'Atenção',
         'Preencha todos os campos para continuar'
@@ -66,26 +73,24 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    await this.storage.get('usuariosCadastrados').then((data) => {
-      this.usuariosCadastrados = data;
-    });
+    const url = `/login?login=${usuario}&senha=${senha}`;
 
-    if (!this.usuariosCadastrados.length) return;
-
-    this.usuariosCadastrados.forEach((element: any) => {
-      if (
-        this.formLogin.usuario == element.usuario &&
-        this.formLogin.senha == element.senha
-      ) {
-        this.storage.set('usarioLogado', this.formLogin);
-        this.logado = true;
-      } /* else {
+    this.requisicao.get(url).subscribe(
+      (data: any) => {
+        if (data.status === 'ok') {
+          this.storage.set('usarioLogado', this.formLogin);
+          this.logado = true;
+        } else {
+          this.mensagem.mostrarMensagem('Atenção', data.msg);
+        }
+      },
+      (err) => {
         this.mensagem.mostrarMensagem(
           'Atenção',
-          'Usuário ou senha incorretos, revise e tente logar novamente'
+          err.error.msg ?? 'Serviço instável. Tente novamente mais tarde!'
         );
-      }*/
-    });
+      }
+    );
   }
 
   async irParaCadastro() {
@@ -103,13 +108,13 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    await this.storage.get('usuariosCadastrados').then((data) => {
-      this.usuariosCadastrados = data;
-    });
+    // await this.storage.get('usuariosCadastrados').then((data) => {
+    //   this.usuariosCadastrados = data;
+    // });
 
-    this.usuariosCadastrados.push(this.formCadastro);
-    this.storage.set('perfil', this.formCadastro);
-    this.storage.set('usuariosCadastrados', this.usuariosCadastrados);
+    // this.usuariosCadastrados.push(this.formCadastro);
+    // this.storage.set('perfil', this.formCadastro);
+    // this.storage.set('usuariosCadastrados', this.usuariosCadastrados);
 
     this.formLogin.usuario = this.formCadastro.usuario;
     this.formLogin.senha = this.formCadastro.senha;

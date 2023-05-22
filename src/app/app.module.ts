@@ -9,11 +9,15 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    HttpModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     FormsModule,
