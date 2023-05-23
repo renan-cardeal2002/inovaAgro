@@ -3,7 +3,8 @@ import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import Chart from 'chart.js/auto';
 import { FuncoesGeraisService } from '../services/funcoes-gerais.service';
-import { Ocorrencias } from '../classes/ocorrencias';
+import { Movimento } from '../classes/movimento';
+import { RequisicaoService } from '../services/requisicao.service';
 
 @Component({
   selector: 'app-tab1',
@@ -16,14 +17,16 @@ export class Tab1Page implements OnInit {
   public grafico: any;
   public visualizaSaldo: boolean = false;
 
-  public cOcorrencia: Ocorrencias;
+  public movimentos: any[] = [];
+  public cMovimento: Movimento;
 
   constructor(
     private navCtrl: NavController,
     private storage: Storage,
-    public funcoes: FuncoesGeraisService
+    public funcoes: FuncoesGeraisService,
+    private requisicao: RequisicaoService
   ) {
-    this.cOcorrencia = new Ocorrencias(this.storage);
+    this.cMovimento = new Movimento(requisicao);
   }
 
   ngOnInit(): void {}
@@ -35,18 +38,26 @@ export class Tab1Page implements OnInit {
       if (this.saldo < 0) this.cor = 'danger';
     });
 
-    await this.cOcorrencia.getOcorrencias().then(() => {
+    this.buscarMovimentos();
+  }
+
+  async buscarMovimentos() {
+    let idConta = 1;
+
+    this.cMovimento.getMovimentos(idConta).then((data: any) => {
+      this.movimentos = data;
+      console.log('buscou');
       this.atualizaGrafico();
       this.grafico.destroy();
     });
   }
 
   async atualizaGrafico() {
-    const registrosRecebidos: any = this.cOcorrencia.ocorrencias.filter(
-      (item: any) => item.tipo === 'RECEB.'
+    const registrosRecebidos: any = this.movimentos.filter(
+      (item: any) => item.tipo_movimento === 'RECEB.'
     );
-    const registrosGastos: any = this.cOcorrencia.ocorrencias.filter(
-      (item: any) => item.tipo === 'GASTO'
+    const registrosGastos: any = this.movimentos.filter(
+      (item: any) => item.tipo_movimento === 'GASTO'
     );
 
     const somaRecebidos = await registrosRecebidos.reduce(
@@ -89,8 +100,8 @@ export class Tab1Page implements OnInit {
   getCorCard(item: any) {
     let cor: string = 'warning';
 
-    if (item.tipo === 'GASTO') cor = 'danger';
-    if (item.tipo === 'RECEB.') cor = 'success';
+    if (item.tipo_movimento === 'GASTO') cor = 'danger';
+    if (item.tipo_movimento === 'RECEB.') cor = 'success';
 
     return cor;
   }

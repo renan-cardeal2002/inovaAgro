@@ -2,7 +2,6 @@ import { Storage } from '@ionic/storage';
 
 export class Usuario {
   public storage: Storage;
-  private usuario: any;
   private usuariosCadastrados: any = [
     {
       nome: 'Renan Cardeal',

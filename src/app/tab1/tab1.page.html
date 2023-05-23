@@ -85,7 +85,7 @@
 
   <div style="width: 100%;"><canvas id="saldo"></canvas></div>
 
-  <ion-card *ngFor="let ocor of cOcorrencia.ocorrencias;" [color]="getCorCard(ocor)">
+  <ion-card *ngFor="let ocor of movimentos;" [color]="getCorCard(ocor)">
     <ion-card-header>
       <ion-card-title>
         <ion-row>
@@ -101,10 +101,13 @@
     <ion-card-content>
       <ion-row>
         <ion-col>
-          {{ocor.tipo}}
+          {{ocor.tipo_movimento}}
+        </ion-col>
+        <ion-col>
+          {{ocor.id_usuario}}
         </ion-col>
         <ion-col style="text-align: right;">
-          {{funcoes.formataData(ocor.data, 5)}}
+          {{ocor.data_movimento}}
         </ion-col>
       </ion-row>
     </ion-card-content>

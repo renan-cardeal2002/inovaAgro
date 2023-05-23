@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { Movimento } from 'src/app/classes/movimento';
 import { MensagemService } from 'src/app/services/mensagem.service';
+import { RequisicaoService } from 'src/app/services/requisicao.service';
 
 @Component({
   selector: 'app-recebimentos',
@@ -13,13 +15,16 @@ export class RecebimentosPage implements OnInit {
   public saldoTotal: number;
   public valorRecebido: number;
   public descricao: string = '';
-  public ocorrencias: any[] = [];
+  public cMovimento: Movimento;
 
   constructor(
     private navCtrl: NavController,
     private storage: Storage,
-    private mensagem: MensagemService
-  ) {}
+    private mensagem: MensagemService,
+    private requisicao: RequisicaoService
+  ) {
+    this.cMovimento = new Movimento(requisicao);
+  }
 
   async ngOnInit() {
     await this.storage.get('usarioLogado').then((data) => {
@@ -27,9 +32,6 @@ export class RecebimentosPage implements OnInit {
     });
     await this.storage.get('saldo').then((data) => {
       this.saldoTotal = data;
-    });
-    await this.storage.get('ocorrencias').then((data) => {
-      if (data) this.ocorrencias = data;
     });
   }
 
@@ -46,17 +48,15 @@ export class RecebimentosPage implements OnInit {
     this.storage.set('saldo', this.saldoTotal);
 
     const novaOcor = {
-      tipo: 'RECEB.',
-      usuario: this.usuarioLogado.usuario,
-      valor: Math.abs(this.valorRecebido),
+      tipoMovimento: 'RECEB.',
       descricao: this.descricao,
+      valor: Math.abs(this.valorRecebido),
       data: new Date(),
+      usuario: this.usuarioLogado.usuario,
+      conta: 1,
     };
 
-    this.ocorrencias.push(novaOcor);
-
-    this.storage.set('ocorrencias', this.ocorrencias);
-
+    this.cMovimento.inserirMovimento(novaOcor);
     this.navCtrl.back();
   }
 
